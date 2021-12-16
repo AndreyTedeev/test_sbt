@@ -1,0 +1,14 @@
+logs
+target
+null
+project/project
+project/target
+/.apt_generated
+/.apt_generated_tests
+/.bsp
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+/RUNNING_PID
