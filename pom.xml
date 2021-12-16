@@ -10,10 +10,10 @@
   <organization>
     <name>test-sbt</name>
   </organization>
-  <!-- <properties>
+  <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>11</maven.compiler.release>
-  </properties> -->
+  </properties>
   <build>
     <sourceDirectory>app</sourceDirectory>
     <testSourceDirectory>test</testSourceDirectory>
