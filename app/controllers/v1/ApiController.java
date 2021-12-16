@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 
 import models.v1.AddUsersRequest;
 import models.v1.AddUsersResponse;
+import play.libs.Json;
 import play.mvc.*;
 
 /**
@@ -36,10 +37,10 @@ public class ApiController extends Controller {
      */
     public Result addUsers(Http.Request request) {
         try {
-            var data = gson.fromJson(request.body().asText(), AddUsersRequest.class);
+            var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
             // TODO : process data
             var result = new AddUsersResponse(data.getUsers().size(), true);
-            return ok( gson.toJson(result));
+            return ok(gson.toJson(result));
         } catch (Exception e) {
             return badRequest(e.getMessage());
         }
