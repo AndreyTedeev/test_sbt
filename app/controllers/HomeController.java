@@ -32,4 +32,6 @@ public class HomeController extends Controller {
         return ok(gson.toJson(user));
     }
 
+    
+
 }
