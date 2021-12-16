@@ -1,0 +1,16 @@
+## load external properties
+#load:
+#  properties: ${user.home}/config/my-application.properties
+
+ebean:
+  dbSchema: test_sbt
+  ddl:
+    generate: true
+    run: true
+  migration.run: true
+
+datasource:
+  db:
+    username: postgres
+    password: 1qaz@WSX
+    url: jdbc:postgresql://localhost:5432/postgres
