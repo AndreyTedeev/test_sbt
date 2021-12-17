@@ -66,6 +66,7 @@ public class ApiService {
             result.getExternalUsers().add(extUser);
         }
 
+        
         return result;
     }
 
