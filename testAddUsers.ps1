@@ -2,7 +2,8 @@
 
 $HEADERS = @{
     # "Authorization" = "Bearer $TOKEN"
-    "Content-Type"  = "application/json"
+    "Content-Type" = "application/json"
+    "Api-Token"    = "test-token"
 }
 
 $URI = "http://localhost:9000/api/v1/users"

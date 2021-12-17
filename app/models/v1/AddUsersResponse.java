@@ -6,10 +6,10 @@ import java.util.Objects;
 public class AddUsersResponse implements Serializable {
     
     /* Количество обработанных записей */
-    private Integer count;
+    private Integer count = 0;
 
     /* статус */
-    private Boolean result;
+    private Boolean result = false;
 
     public AddUsersResponse() {
     }
