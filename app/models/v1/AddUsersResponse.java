@@ -9,14 +9,14 @@ public class AddUsersResponse implements Serializable {
     private Integer count;
 
     /* статус */
-    private Boolean status;
+    private Boolean result;
 
     public AddUsersResponse() {
     }
 
-    public AddUsersResponse(Integer count, Boolean status) {
+    public AddUsersResponse(Integer count, Boolean result) {
         this.count = count;
-        this.status = status;
+        this.result = result;
     }
     
     public Integer getCount() {
@@ -27,16 +27,12 @@ public class AddUsersResponse implements Serializable {
         this.count = count;
     }
 
-    public Boolean isStatus() {
-        return this.status;
+    public Boolean getResult() {
+        return this.result;
     }
 
-    public Boolean getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setResult(Boolean result) {
+        this.result = result;
     }
 
     @Override
@@ -47,11 +43,11 @@ public class AddUsersResponse implements Serializable {
             return false;
         }
         var other = (AddUsersResponse) o;
-        return Objects.equals(count, other.count) && Objects.equals(status, other.status);
+        return Objects.equals(count, other.count) && Objects.equals(result, other.result);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(count, status);
+        return Objects.hash(count, result);
     }
 }

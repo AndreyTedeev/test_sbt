@@ -28,6 +28,4 @@ $JSON = @{
     )
 } | ConvertTo-Json
 
-Write-Host $JSON
-
 Invoke-WebRequest -Uri $URI -Method POST -Headers $HEADERS -Body $JSON

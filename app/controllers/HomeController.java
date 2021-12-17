@@ -1,11 +1,5 @@
 package controllers;
 
-import java.util.UUID;
-
-import com.google.gson.Gson;
-
-import entities.User;
-import io.ebean.DB;
 import play.mvc.*;
 
 /**
@@ -23,15 +17,5 @@ public class HomeController extends Controller {
     public Result index() {
         return ok("Привет, я ЕСА!");
     }
-
-    public Result test() {
-        User user = new User();
-        user.setId(UUID.randomUUID());
-        DB.save(user);
-        Gson gson = new Gson();
-        return ok(gson.toJson(user));
-    }
-
-    
 
 }

@@ -9,8 +9,6 @@ scalaVersion := "2.13.7"
 
 libraryDependencies += guice
 libraryDependencies += jdbc
-// libraryDependencies += "org.fusesource.jansi" % "jansi" % "2.4.0"
-libraryDependencies += "com.google.code.gson" % "gson" % "2.8.9"
 libraryDependencies += "javax.persistence" % "javax.persistence-api" % "2.2"
 libraryDependencies += "io.ebean" % "ebean" % "12.8.1"
 libraryDependencies += "io.ebean" % "ebean-test" % "12.8.1"

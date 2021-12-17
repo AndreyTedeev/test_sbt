@@ -1,7 +1,5 @@
 package controllers.v1;
 
-import com.google.gson.Gson;
-
 import models.v1.AddUsersRequest;
 import models.v1.AddUsersResponse;
 import play.libs.Json;
@@ -12,8 +10,6 @@ import play.mvc.*;
  * to the application's API v1.
  */
 public class ApiController extends Controller {
-
-    private final Gson gson = new Gson();
 
     /**
      * Эндпоинт добавления и обновления пользователей в БД ЕСА
@@ -40,7 +36,7 @@ public class ApiController extends Controller {
             var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
             // TODO : process data
             var result = new AddUsersResponse(data.getUsers().size(), true);
-            return ok(gson.toJson(result));
+            return ok(Json.toJson(result));
         } catch (Exception e) {
             return badRequest(e.getMessage());
         }
