@@ -14,7 +14,7 @@ public class ExternalUserId implements Serializable {
     private UUID id;
     
     @Column(name = "system_type")
-    private String systemType;
+    private ExternalUserSystemType systemType;
     
     public UUID getId() {
         return this.id;
@@ -24,11 +24,11 @@ public class ExternalUserId implements Serializable {
         this.id = id;
     }
 
-    public String getSystemType() {
+    public ExternalUserSystemType getSystemType() {
         return this.systemType;
     }
 
-    public void setSystemType(String systemType) {
+    public void setSystemType(ExternalUserSystemType systemType) {
         this.systemType = systemType;
     }
 

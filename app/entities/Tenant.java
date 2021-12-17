@@ -2,6 +2,8 @@ package entities;
 
 import java.util.UUID;
 import java.util.*;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -14,7 +16,7 @@ public class Tenant {
 
     private String host;
     
-    @ManyToMany(mappedBy = "tenants")
+    @ManyToMany(mappedBy = "tenants", cascade=CascadeType.ALL)
     private List<User> users;
 
     public UUID getId() {
@@ -32,5 +34,12 @@ public class Tenant {
     public void setHost(String host) {
         this.host = host;
     }
-    
+
+    public List<User> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }
