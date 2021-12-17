@@ -21,7 +21,6 @@ public class ApiController extends Controller {
         this.api = api;
     }
 
-
     /**
      * Эндпоинт добавления и обновления пользователей в БД ЕСА
      * 
@@ -43,14 +42,20 @@ public class ApiController extends Controller {
      * Авторизация Токен авторизации в заголовке Api-Token
      */
     public Result addUsers(Http.Request request) {
-        try {
-            var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
-            var count = api.addUsers(data);
-            var result = new AddUsersResponse(count, true);
-            return ok(Json.toJson(result));
-        } catch (Exception e) {
-            return badRequest(e.getMessage());
+        var result = new AddUsersResponse();
+        var tokenParam = request.header("Api-Token");
+        result.setResult(tokenParam.isPresent()
+                && api.isValidToken(tokenParam.get()));
+        if (result.getResult()) {
+            try {
+                var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
+                result.setCount(api.addUsers(data));
+            } catch (Exception e) {
+                return badRequest(e.getMessage());
+            }
         }
+
+        return ok(Json.toJson(result));
     }
 
 }
