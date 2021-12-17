@@ -1,15 +1,26 @@
 package controllers.v1;
 
+import javax.inject.Inject;
+
 import models.v1.AddUsersRequest;
 import models.v1.AddUsersResponse;
 import play.libs.Json;
 import play.mvc.*;
+import services.v1.ApiService;
 
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's API v1.
  */
 public class ApiController extends Controller {
+
+    private final ApiService api;
+
+    @Inject
+    public ApiController(ApiService api) {
+        this.api = api;
+    }
+
 
     /**
      * Эндпоинт добавления и обновления пользователей в БД ЕСА
@@ -34,8 +45,8 @@ public class ApiController extends Controller {
     public Result addUsers(Http.Request request) {
         try {
             var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
-            // TODO : process data
-            var result = new AddUsersResponse(data.getUsers().size(), true);
+            var count = api.addUsers(data);
+            var result = new AddUsersResponse(count, true);
             return ok(Json.toJson(result));
         } catch (Exception e) {
             return badRequest(e.getMessage());
