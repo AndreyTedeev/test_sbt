@@ -5,10 +5,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class UserModel implements Serializable {
-    
+
     /* UUID пользователя HR-Link */
     private UUID id;
-    
+
     /* Хэш SHA256 ФИОДУЛДР пользователя */
     private String fioduldrHash;
 

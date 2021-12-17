@@ -10,13 +10,13 @@ import javax.persistence.ManyToMany;
 
 @Entity
 public class Tenant {
-    
+
     @Id
-    private UUID id; 
+    private UUID id;
 
     private String host;
-    
-    @ManyToMany(mappedBy = "tenants", cascade=CascadeType.ALL)
+
+    @ManyToMany(mappedBy = "tenants", cascade = CascadeType.ALL)
     private List<User> users;
 
     public UUID getId() {

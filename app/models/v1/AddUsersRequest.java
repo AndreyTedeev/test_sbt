@@ -5,13 +5,12 @@ import java.util.List;
 import java.util.Objects;
 
 public class AddUsersRequest implements Serializable {
-    
+
     /* объект с параметрами тенанта ФЛ */
     private TenantModel tenant;
 
     /* массив данных пользователей */
     private List<UserModel> users;
-
 
     public TenantModel getTenant() {
         return this.tenant;

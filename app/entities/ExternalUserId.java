@@ -9,13 +9,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class ExternalUserId implements Serializable {
     private static final long serialVersionUID = 1L;
-    
+
     @Column(name = "user_id")
     private UUID id;
-    
+
     @Column(name = "system_type")
     private ExternalUserSystemType systemType;
-    
+
     public UUID getId() {
         return this.id;
     }
@@ -37,7 +37,7 @@ public class ExternalUserId implements Serializable {
             return true;
         if (!(other instanceof ExternalUserId))
             return false;
-            ExternalUserId castOther = (ExternalUserId) other;
+        ExternalUserId castOther = (ExternalUserId) other;
         return id.equals(castOther.id) && systemType.equals(castOther.systemType);
     }
 

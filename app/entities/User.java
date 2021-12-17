@@ -19,18 +19,11 @@ public class User {
     @Id
     private UUID id;
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(
-        name = "user_tenant", 
-        joinColumns = @JoinColumn(name = "user_id"), 
-        inverseJoinColumns = @JoinColumn(name = "tenant_id"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "user_tenant", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "tenant_id"))
     private List<Tenant> tenants;
 
-    @OneToMany(
-        mappedBy = "user",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ExternalUser> externalUsers;
 
     public UUID getId() {
@@ -56,5 +49,5 @@ public class User {
     public void setExternalUsers(List<ExternalUser> externalUsers) {
         this.externalUsers = externalUsers;
     }
-    
+
 }

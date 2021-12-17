@@ -5,10 +5,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class TenantModel implements Serializable {
-    
+
     /* UUID тенанта */
     private UUID id;
-    
+
     /* URL тенанта */
     private String host;
 

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class AddUsersResponse implements Serializable {
-    
+
     /* Количество обработанных записей */
     private Integer count = 0;
 
@@ -18,7 +18,7 @@ public class AddUsersResponse implements Serializable {
         this.count = count;
         this.result = result;
     }
-    
+
     public Integer getCount() {
         return this.count;
     }

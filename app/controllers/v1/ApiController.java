@@ -9,8 +9,8 @@ import play.mvc.*;
 import services.v1.ApiService;
 
 /**
- * This controller contains an action to handle HTTP requests
- * to the application's API v1.
+ * This controller contains an action to handle HTTP requests to the
+ * application's API v1.
  */
 public class ApiController extends Controller {
 
@@ -30,12 +30,10 @@ public class ApiController extends Controller {
      * Требования к реализации:
      * 
      * Метод должен поддерживать пакетную обработку, т.е. может принимать сразу
-     * множество сотрудников
-     * Запрос должен быть аутентифицирован токеном в заголовке. Проверка валидности
-     * токена осуществляется запросом к сервису ekd-license.
-     * Метод не принимает пользовательские данные, принимает только хэш от
-     * нормализованного значения ФИОДУЛДР
-     * Метод: POST
+     * множество сотрудников Запрос должен быть аутентифицирован токеном в
+     * заголовке. Проверка валидности токена осуществляется запросом к сервису
+     * ekd-license. Метод не принимает пользовательские данные, принимает только хэш
+     * от нормализованного значения ФИОДУЛДР Метод: POST
      * 
      * URL: https://{ECA_URL}/api/v1/users
      * 
@@ -44,13 +42,13 @@ public class ApiController extends Controller {
     public Result addUsers(Http.Request request) {
         var result = new AddUsersResponse();
         var tokenParam = request.header("Api-Token");
-        result.setResult(tokenParam.isPresent()
-                && api.isValidToken(tokenParam.get()));
+        result.setResult(tokenParam.isPresent() && api.isValidToken(tokenParam.get()));
         if (result.getResult()) {
             try {
                 var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
                 result.setCount(api.addUsers(data));
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 return badRequest(e.getMessage());
             }
         }

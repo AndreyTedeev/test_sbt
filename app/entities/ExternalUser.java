@@ -13,15 +13,13 @@ public class ExternalUser {
 
     @EmbeddedId
     private ExternalUserId externalUserId;
-    
+
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     public User user;
-    
 
     @Column(name = "value")
     private String value;
-
 
     public ExternalUserId getExternalUserId() {
         return this.externalUserId;
