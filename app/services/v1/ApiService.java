@@ -2,7 +2,10 @@ package services.v1;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
+
+import com.typesafe.config.Config;
 
 import entities.ExternalUser;
 import entities.ExternalUserId;
@@ -16,6 +19,14 @@ import models.v1.UserModel;
 
 @Singleton
 public class ApiService {
+
+    private final Config config;
+
+    @Inject
+    public ApiService(Config config) {
+        this.config = config;
+    }
+
 
     /*
      * Проверка валидности токена, полученного от HR-Link в запросе на
@@ -36,6 +47,12 @@ public class ApiService {
      * который пришёл от экземпляра HRL в заголовке Api-Token запроса Users Create.
      */
     public Boolean isValidToken(String token) {
+        var url = config.getString("app.validation.url");
+        var key = config.getString("app.validation.key");
+        var tkn = config.getString("app.validation.token");
+        System.out.println(url);
+        System.out.println(key);
+        System.out.println(tkn);
         // TODO : implement FR-1101-03
         return token.equals("test-token");
     }
