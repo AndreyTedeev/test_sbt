@@ -89,6 +89,11 @@
         </dependency>
         <dependency>
             <groupId>com.typesafe.play</groupId>
+            <artifactId>play-ws_2.13</artifactId>
+            <version>2.8.11</version>
+        </dependency>
+        <dependency>
+            <groupId>com.typesafe.play</groupId>
             <artifactId>play-enhancer</artifactId>
             <version>1.2.2</version>
         </dependency>

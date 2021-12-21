@@ -43,6 +43,7 @@ public class ApiController extends Controller {
         var result = new AddUsersResponse();
         var tokenParam = request.header("Api-Token");
         result.setResult(tokenParam.isPresent() && api.isValidToken(tokenParam.get()));
+
         if (result.getResult()) {
             try {
                 var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);

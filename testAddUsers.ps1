@@ -11,7 +11,7 @@ $URI = "http://localhost:9000/api/v1/users"
 $JSON = @{
     "tenant" = @{
         "id"   = "d3b1cac3-1a0b-4bc3-b1f9-ef7e23dda0af"
-        “host" = "https://hrlink.com:8089/api/hosr" 
+        "host" = "https://hrlink.com:8089/api/hosr" 
     }
     "users"  = @(
         @{

@@ -9,6 +9,7 @@ scalaVersion := "2.13.7"
 
 libraryDependencies += guice
 libraryDependencies += jdbc
+libraryDependencies += javaWs
 libraryDependencies += "javax.persistence" % "javax.persistence-api" % "2.2"
 libraryDependencies += "io.ebean" % "ebean" % "12.8.1"
 libraryDependencies += "io.ebean" % "ebean-test" % "12.8.1"

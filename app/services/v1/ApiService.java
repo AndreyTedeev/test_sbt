@@ -14,19 +14,24 @@ import entities.Tenant;
 import entities.User;
 import io.ebean.DB;
 import models.v1.AddUsersRequest;
+import models.v1.EkdLicenseRequest;
+import models.v1.EkdLicenseResponse;
 import models.v1.TenantModel;
 import models.v1.UserModel;
+import play.libs.Json;
+import play.libs.ws.WSClient;
 
 @Singleton
 public class ApiService {
 
     private final Config config;
+    private final WSClient ws;
 
     @Inject
-    public ApiService(Config config) {
+    public ApiService(Config config, WSClient ws) {
         this.config = config;
+        this.ws = ws;
     }
-
 
     /*
      * Проверка валидности токена, полученного от HR-Link в запросе на
@@ -47,14 +52,27 @@ public class ApiService {
      * который пришёл от экземпляра HRL в заголовке Api-Token запроса Users Create.
      */
     public Boolean isValidToken(String token) {
-        var url = config.getString("app.validation.url");
-        var key = config.getString("app.validation.key");
-        var tkn = config.getString("app.validation.token");
-        System.out.println(url);
-        System.out.println(key);
-        System.out.println(tkn);
-        // TODO : implement FR-1101-03
-        return token.equals("test-token");
+        var url = config.getString("ekd.url");
+        var key = config.getString("ekd.key");
+        var tkn = config.getString("ekd.token");
+        var data = new EkdLicenseRequest();
+        data.setToken(token);
+        
+        var result = false;
+        try {
+            result = ws.url(url)
+                .addHeader(key, tkn)
+                .post(Json.toJson(data))
+                .thenApply(resp -> Json.fromJson(resp.asJson(), EkdLicenseResponse.class))
+                .toCompletableFuture()
+                .join()
+                .isExists();
+        } 
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return result;
     }
 
     public int addUsers(AddUsersRequest data) {
@@ -68,7 +86,7 @@ public class ApiService {
             }
         }
 
-        DB.save(tenant);
+        DB.save(tenant); 
         return data.getUsers().size();
     }
 
