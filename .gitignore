@@ -1,6 +1,7 @@
 logs
 target
 null
+bin
 project/project
 project/target
 /.apt_generated
