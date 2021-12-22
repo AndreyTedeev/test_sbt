@@ -42,16 +42,22 @@ public class ApiController extends Controller {
     public Result addUsers(Http.Request request) {
         var result = new AddUsersResponse();
         var tokenParam = request.header("Api-Token");
-        result.setResult(tokenParam.isPresent() && api.isValidToken(tokenParam.get()));
+        if (!tokenParam.isPresent()) {
+            return unauthorized();
+        }
 
-        if (result.getResult()) {
-            try {
-                var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
-                result.setCount(api.addUsers(data));
-            }
-            catch (Exception e) {
-                return badRequest(e.getMessage());
-            }
+        if (!api.isValidToken(tokenParam.get())) 
+        {
+            return forbidden();
+        }
+
+        try {
+            var data = Json.fromJson(request.body().asJson(), AddUsersRequest.class);
+            result.setCount(api.addUsers(data));
+            result.setResult(true);
+        }
+        catch (Exception e) {
+            return badRequest(e.getMessage());
         }
 
         return ok(Json.toJson(result));
