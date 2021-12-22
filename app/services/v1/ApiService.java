@@ -1,5 +1,6 @@
 package services.v1;
 
+import java.text.Format;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -21,6 +22,8 @@ import models.v1.EkdLicenseRequest;
 import models.v1.EkdLicenseResponse;
 import models.v1.TenantModel;
 import models.v1.UserModel;
+import models.v1.VtbErrorResponse;
+import models.v1.VtbTokenResponse;
 import play.libs.Json;
 import play.libs.ws.WSClient;
 
@@ -56,7 +59,6 @@ public class ApiService {
      * который пришёл от экземпляра HRL в заголовке Api-Token запроса Users Create.
      */
     public Boolean isValidToken(String token) {
-        logger.info("called isValidToken");
         var url = config.getString("ekd.url");
         var key = config.getString("ekd.key");
         var tkn = config.getString("ekd.token");
@@ -80,6 +82,30 @@ public class ApiService {
 
         return result;
     }
+
+    public VtbTokenResponse vtbToken(String username, String password) throws Exception 
+    {
+        logger.info("called vtbToken");
+        var url = config.getString("vtb.token.url");
+        var code = config.getString("vtb.token.code");
+        var base64 = encodeBase64(String.format("%s:%s", username, password));
+        var body = String.format("{\"grant_type\": \"code\",\"code\": \"%s\"}", code);
+        var req = ws.url(url).addHeader("Authorization", String.format("Basic %s", base64));
+        try {
+            var rsp = req.post(body).toCompletableFuture().get();
+            if (rsp.getStatus() == 200) {
+                return Json.fromJson(rsp.asJson(), VtbTokenResponse.class);
+            }
+            else {
+                var err = Json.fromJson(rsp.asJson(), VtbErrorResponse.class);
+                var msg = String.format("%s : %s", err.getError(), err.getError_message());
+                throw new Exception(msg);
+            }
+        }
+        catch (Exception e) {
+            throw e;
+        }
+    } 
 
     public int addUsers(AddUsersRequest data) {
         var tenant = getEntity(data.getTenant());
@@ -133,4 +159,9 @@ public class ApiService {
         return result;
     }
 
+    private String encodeBase64(String source) 
+    {
+        // TODO : implement base64 encoding
+        return source;
+    }
 }
