@@ -7,6 +7,9 @@ import javax.inject.Singleton;
 
 import com.typesafe.config.Config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import entities.ExternalUser;
 import entities.ExternalUserId;
 import entities.ExternalUserSystemType;
@@ -24,6 +27,7 @@ import play.libs.ws.WSClient;
 @Singleton
 public class ApiService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ApiService.class);
     private final Config config;
     private final WSClient ws;
 
@@ -52,24 +56,26 @@ public class ApiService {
      * который пришёл от экземпляра HRL в заголовке Api-Token запроса Users Create.
      */
     public Boolean isValidToken(String token) {
+        logger.info("called isValidToken");
         var url = config.getString("ekd.url");
         var key = config.getString("ekd.key");
         var tkn = config.getString("ekd.token");
         var data = new EkdLicenseRequest();
         data.setToken(token);
-        
+
         var result = false;
+        var req = ws.url(url).addHeader(key, tkn);
         try {
-            result = ws.url(url)
-                .addHeader(key, tkn)
-                .post(Json.toJson(data))
-                .thenApply(resp -> Json.fromJson(resp.asJson(), EkdLicenseResponse.class))
-                .toCompletableFuture()
-                .join()
-                .isExists();
-        } 
+            var rsp = req.post(Json.toJson(data)).toCompletableFuture().get();
+            if (rsp.getStatus() == 200) {
+                result = Json.fromJson(rsp.asJson(), EkdLicenseResponse.class).isExists();
+            }
+            else {
+                logger.error("Response status code is : %d", rsp.getStatus());
+            }
+        }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
         }
 
         return result;
@@ -86,7 +92,7 @@ public class ApiService {
             }
         }
 
-        DB.save(tenant); 
+        DB.save(tenant);
         return data.getUsers().size();
     }
 
